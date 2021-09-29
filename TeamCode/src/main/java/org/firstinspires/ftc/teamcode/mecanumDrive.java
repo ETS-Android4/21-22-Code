@@ -40,8 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="cool program")
-@Disabled
+@TeleOp(name="mecanum test")
 public class mecanumDrive extends OpMode {
 
     // Declare OpMode members.
