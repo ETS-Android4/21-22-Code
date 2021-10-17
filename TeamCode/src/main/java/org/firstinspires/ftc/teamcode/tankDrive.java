@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="test")
+@TeleOp(name="tankdrive")
 public class tankDrive extends OpMode {
 
     DcMotor fl = null;

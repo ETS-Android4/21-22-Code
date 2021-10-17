@@ -111,8 +111,6 @@ public class mecanumDrive extends OpMode {
         fr.setPower(v2);
         bl.setPower(v3);
         br.setPower(v4);
-
-
     }
 
     /*
