@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -19,6 +20,9 @@ public class teleopv2 extends LinearOpMode { //main class
         DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
         DcMotor bl = hardwareMap.dcMotor.get("back_left_motor");
         DcMotor br = hardwareMap.dcMotor.get("back_right_motor");
+
+        CRServo crServo = hardwareMap.crservo.get("crServo");
+
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
                                                             //hello java sucks >B)))
@@ -31,23 +35,20 @@ public class teleopv2 extends LinearOpMode { //main class
           //if the "A" button is pressed, the speed will switch from 1 to 0.5 and vice versa
             if(gamepad1.a){
                 if(speed == 1){ //if the current increment is 1, it'll switch to 0.5
-                    speed = 0.2;
+                    speed = 0.5;
                 }
                 else{ //if the current increment is not 1, it'll switch to 1
                     speed = 1;
                 }
             }
             
-            
             fl.setPower(-gamepad1.left_stick_y * speed);
-            fr.setPower(-gamepad1.left_stick_y * speed);
+            fr.setPower(-gamepad1.right_stick_y * speed);
             bl.setPower(-gamepad1.left_stick_y * speed);
-            br.setPower(-gamepad1.left_stick_y * speed);
+            br.setPower(-gamepad1.right_stick_y * speed);
 
-            fl.setPower(gamepad1.left_stick_x * speed);
-            fr.setPower(-gamepad1.left_stick_x * speed);
-            bl.setPower(gamepad1.left_stick_x * speed);
-            br.setPower(-gamepad1.left_stick_x * speed);
+
+            crServo.setPower(gamepad1.right_trigger);
 
 
 
@@ -58,7 +59,7 @@ public class teleopv2 extends LinearOpMode { //main class
             telemetry.addData("left joystick x value", gamepad1.left_stick_x);
             telemetry.update();
 
-}
+        }
 
     }
 

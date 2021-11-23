@@ -19,14 +19,17 @@ public class tankDrive extends LinearOpMode { //main class
     public void runOpMode(){
 
 
-        //DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
-       // DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
-        //DcMotor bl = hardwareMap.dcMotor.get("back_left_motor");
-        //DcMotor br = hardwareMap.dcMotor.get("back_right_motor");
-        //fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        //  bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
+        DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
+        DcMotor bl = hardwareMap.dcMotor.get("back_left_motor");
+        DcMotor br = hardwareMap.dcMotor.get("back_right_motor");
+        fl.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         CRServo crServo = hardwareMap.crservo.get("crServo");
+
+        //robot myRobot = new robot();
+        //myRobot.init();
 
 
         double speed = 1;
@@ -36,27 +39,35 @@ public class tankDrive extends LinearOpMode { //main class
         waitForStart();
         while (opModeIsActive()){
 
-          if(gamepad1.a) {
-              if (speed == 1) { //if the current increment is 1, it'll switch to 0.5
-                  speed = 0.2;
-              } else { //if the current increment is not 1, it'll switch to 1
-                  speed = 1;
-              }
-          }
+            //if the "A" button is pressed, the speed will switch from 1 to 0.5 and vice versa
+            if(gamepad1.a){
+                if(speed == 1){ //if the current increment is 1, it'll switch to 0.5
+                    speed = 0.5;
+                }
+                else{ //if the current increment is not 1, it'll switch to 1
+                    speed = 1;
+                }
+            }
 
-          crServo.setPower(gamepad1.right_trigger);
+            fl.setPower(-gamepad1.left_stick_y * speed);
+            fr.setPower(-gamepad1.right_stick_y * speed);
+            bl.setPower(-gamepad1.left_stick_y * speed);
+            br.setPower(-gamepad1.right_stick_y * speed);
 
-         // fl.setPower(-gamepad1.left_stick_y);
-          //fr.setPower(-gamepad1.right_stick_y);
-          //bl.setPower(-gamepad1.left_stick_y);
-          //br.setPower(-gamepad1.right_stick_y);
+            while(gamepad1.right_bumper){
+                crServo.setPower(-1);
+            }
+            crServo.setPower(gamepad1.right_trigger);
 
-          telemetry.addData("Status", "Running");
-          telemetry.addData("right joystick y value", gamepad1.right_stick_y);
-          telemetry.addData("right joystick x value", gamepad1.right_stick_x);
-          telemetry.addData("left joystick y value", gamepad1.left_stick_y);
-          telemetry.addData("left joystick x value", gamepad1.left_stick_x);
-          telemetry.update();
+
+
+            telemetry.addData("Status", "Running");
+            telemetry.addData("right joystick y value", gamepad1.right_stick_y);
+            telemetry.addData("right joystick x value", gamepad1.right_stick_x);
+            telemetry.addData("left joystick y value", gamepad1.left_stick_y);
+            telemetry.addData("left joystick x value", gamepad1.left_stick_x);
+            telemetry.addData("servo power", crServo.getPower());
+            telemetry.update();
         }
     }
 

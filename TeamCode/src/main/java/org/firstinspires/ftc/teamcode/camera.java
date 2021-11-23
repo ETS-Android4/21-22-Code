@@ -50,9 +50,9 @@ public class camera extends OpenCvPipeline {
     /*
      * The core values which define the location and size of the sample regions
      */
-    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(100,98);
-    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(200,98);
-    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(290,98);
+    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
+    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
+    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
     static final int REGION_WIDTH = 20;
     static final int REGION_HEIGHT = 20;
 
@@ -103,7 +103,7 @@ public class camera extends OpenCvPipeline {
     // Volatile since accessed by OpMode thread w/o synchronization
     private volatile SkystonePosition position = SkystonePosition.LEFT;
 
-   // private Telemetry telemetry;
+    private Telemetry telemetry;
 
    /* public camera(Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -286,7 +286,7 @@ public class camera extends OpenCvPipeline {
         }
 
         //telemetry.addData("[Pattern]", position);
-        //telemetry.update();
+       // telemetry.update();
 
         /*
          * Render the 'input' buffer to the viewport. But note this is not
