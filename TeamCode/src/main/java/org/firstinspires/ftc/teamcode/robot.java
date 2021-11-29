@@ -18,10 +18,10 @@ public class robot {
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
    // parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
 
-    public DcMotor fl;
-    public DcMotor fr;
-    public DcMotor bl;
-    public DcMotor br;
+    public DcMotor fl = null;
+    public DcMotor fr = null;
+    public DcMotor bl = null;
+    public DcMotor br = null;
 
 
 

@@ -1,11 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.robot;
 
 @Autonomous(name="Auto Carousel") //telling robot it is autonoumous
 public class autoCarousel extends LinearOpMode {
@@ -20,6 +27,10 @@ public class autoCarousel extends LinearOpMode {
     double GEARRATIO = 1;
     double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
 
+    Orientation angles;
+
+    BNO055IMU imu;
+
     public void runOpMode(){
         fl = hardwareMap.dcMotor.get("front_left_motor");
         fr = hardwareMap.dcMotor.get("front_right_motor");
@@ -30,10 +41,18 @@ public class autoCarousel extends LinearOpMode {
 
         crServo = hardwareMap.crservo.get("crServo");
 
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        imu.initialize(parameters);
+
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        
         waitForStart();
         if(opModeIsActive()){
-            //driveForwardDistance(.5, (int)(655.32/TICKSTOMMTRAVEL));
-            crServo.setPower(1);
+
+            rotate(90);
         }
     }
 
@@ -126,5 +145,73 @@ public class autoCarousel extends LinearOpMode {
     public void servo(double power, int time){
         crServo.setPower(power);
         sleep(time);
+    }
+    public void rotate(double wantedAngle){
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        double startTime = System.nanoTime();
+        double target = wantedAngle;
+
+        double angle = 0;
+
+        int totalTime = 0;
+
+        double error = 90, P, I, D, integral = 0, derivative, correction, t, lastTime = 0, dt = 0.1, lastError = 90;
+        double kp = .015;
+        double ki = 0;
+        double kd = .01;
+
+        while(Math.abs(error) > 3){
+            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            angle = angles.firstAngle;
+
+            t = (double)System.nanoTime()/10;
+            if (lastTime != 0){
+                dt = t - lastTime;
+            }
+
+            error = target - angle;
+            integral = ki * ((error - lastError) * dt);
+            derivative = kd * ((error - lastError) / dt);
+
+            P = kp * error;
+            I = ki * integral;
+            D = kd * derivative;
+
+            correction = P + I + D;
+
+            fl.setPower(-correction);
+            fr.setPower(correction);
+            bl.setPower(-correction);
+            br.setPower(correction);
+
+            //System.out.println(P + " " + I + " " + D);
+            System.out.println(error);
+            System.out.println(angles);
+
+            telemetry.addData("Dt", dt);
+            telemetry.addData("Error", error);
+            telemetry.addData("correction:", correction);
+            telemetry.addData("top Left Power", fl.getPower());
+            telemetry.addData("top Right Power", fr.getPower());
+            telemetry.addData("bottom Left Power", bl.getPower());
+            telemetry.addData("bottom Right Power", br.getPower());
+            telemetry.addData("Angle", angle);
+            telemetry.update();
+
+            lastError = error;
+            lastTime = t;
+            totalTime += t;
+        }
+        telemetry.addData("Angle", angle);
+        telemetry.addData("totalTime: ", totalTime * 10E-9);
+        telemetry.update();
+
+        System.out.println("angle: " + angle);
+        System.out.println("totalTime: " + (totalTime * 10E-9));
+
+        fl.setPower(0);
+        fr.setPower(0);
+        bl.setPower(0);
+        br.setPower(0);
     }
 }
