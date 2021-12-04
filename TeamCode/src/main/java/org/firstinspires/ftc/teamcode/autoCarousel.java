@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot;
 
+import java.security.KeyStore;
+
 @Autonomous(name="Auto Carousel") //telling robot it is autonoumous
 public class autoCarousel extends LinearOpMode {
     DcMotor fl = null;
@@ -52,7 +54,7 @@ public class autoCarousel extends LinearOpMode {
         waitForStart();
         if(opModeIsActive()){
 
-            rotate(90);
+            rotate(180, true);
         }
     }
 
@@ -124,18 +126,6 @@ public class autoCarousel extends LinearOpMode {
         bl.setPower(-power);
         br.setPower(-power);
     }
-    private void driveRight(double power) {
-        fl.setPower(power);
-        fr.setPower(-power);
-        bl.setPower(-power);
-        br.setPower(power);
-    }
-    private void driveLeft(double power) {
-        fl.setPower(-power);
-        fr.setPower(power);
-        bl.setPower(power);
-        br.setPower(-power);
-    }
     private void stopDriving() {
         fl.setPower(0);
         fr.setPower(0);
@@ -146,10 +136,11 @@ public class autoCarousel extends LinearOpMode {
         crServo.setPower(power);
         sleep(time);
     }
-    public void rotate(double wantedAngle){
+    public void rotate(double wantedAngle, boolean turnRight){
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         double startTime = System.nanoTime();
         double target = wantedAngle;
+
 
         double angle = 0;
 
@@ -160,7 +151,7 @@ public class autoCarousel extends LinearOpMode {
         double ki = 0;
         double kd = .01;
 
-        while(Math.abs(error) > 3){
+        while(Math.abs(error) > 3 && opModeIsActive()){
             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             angle = angles.firstAngle;
 
@@ -179,10 +170,20 @@ public class autoCarousel extends LinearOpMode {
 
             correction = P + I + D;
 
-            fl.setPower(-correction);
-            fr.setPower(correction);
-            bl.setPower(-correction);
-            br.setPower(correction);
+            if(turnRight) {
+                fl.setPower(correction);
+                fr.setPower(-correction);
+                bl.setPower(correction);
+                br.setPower(-correction);
+            }
+            if(!turnRight){
+                fl.setPower(-correction);
+                fr.setPower(correction);
+                bl.setPower(-correction);
+                br.setPower(correction);
+            }
+
+
 
             //System.out.println(P + " " + I + " " + D);
             System.out.println(error);
