@@ -1,3 +1,4 @@
+//THIS ONE STARTS FURTHER FROM TEAM WAREHOUSE
 package org.firstinspires.ftc.teamcode;
 
 
@@ -16,15 +17,15 @@ import org.firstinspires.ftc.teamcode.robot;
 
 import java.security.KeyStore;
 
-@Autonomous(name="auto Carousel") //telling robot it is autonoumous
-public class autoCarousel extends LinearOpMode {
+@Autonomous(name="autoRed1") //telling robot it is autonoumous
+public class redBasic1Auto extends LinearOpMode {
     DcMotor fl = null;
     DcMotor fr = null;
     DcMotor bl = null;
     DcMotor br = null;
     CRServo crServo = null;
 
-    double CIRCUMFERENCEOFWHEEL = 603.25; //mm
+    double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
     double GEARRATIO = 1;
     double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
@@ -50,10 +51,14 @@ public class autoCarousel extends LinearOpMode {
         imu.initialize(parameters);
 
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        
+
         waitForStart();
         if(opModeIsActive()){
-            rotate(180);
+            driveForwardDistance(.5, (int) (305/TICKSTOMMTRAVEL)); //get away from wall
+            rotate(90, false); //rotate
+            driveForwardDistance(.5, (int) (1600/TICKSTOMMTRAVEL)); //go to carousel
+            servo(.5, 3000); //spinny carousel
+            driveBackDistance(.5, (int) (3048/TICKSTOMMTRAVEL)); //go all the way back to warehouse
         }
     }
 
@@ -135,11 +140,16 @@ public class autoCarousel extends LinearOpMode {
         crServo.setPower(power);
         sleep(time);
     }
-    public void rotate(double wantedAngle){
+    public void rotate(double wantedAngle, boolean turnRight){
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         double startTime = System.nanoTime();
         double target = 0;
-        target = wantedAngle;
+        if(turnRight) {
+            target = 270;
+        }
+        if(!turnRight){
+            target = wantedAngle;
+        }
 
 
         double angle = 0;
@@ -171,10 +181,20 @@ public class autoCarousel extends LinearOpMode {
 
             correction = P + I + D;
 
-            fl.setPower(-correction);
-            fr.setPower(correction);
-            bl.setPower(-correction);
-            br.setPower(correction);
+            if(turnRight) {
+                fl.setPower(correction);
+                fr.setPower(-correction);
+                bl.setPower(correction);
+                br.setPower(-correction);
+            }
+            if(!turnRight){
+                fl.setPower(-correction);
+                fr.setPower(correction);
+                bl.setPower(-correction);
+                br.setPower(correction);
+            }
+
+
 
             //System.out.println(P + " " + I + " " + D);
             System.out.println(error);
