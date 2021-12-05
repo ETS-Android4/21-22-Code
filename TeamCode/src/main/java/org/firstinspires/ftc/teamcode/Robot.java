@@ -10,21 +10,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class robot {
-
-    Orientation angles = null;
-    HardwareMap hardwareMap;
-    BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
-    BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-   // parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-
-    public DcMotor fl = null;
-    public DcMotor fr = null;
-    public DcMotor bl = null;
-    public DcMotor br = null;
-
-
-
+public class Robot {
+    public Robot(HardwareMap hw){
+        this.hardwareMap = hw;
+    }
     public void init(){
         fl = hardwareMap.dcMotor.get("front_left_motor");
         fr = hardwareMap.dcMotor.get("front_right_motor");
@@ -34,6 +23,17 @@ public class robot {
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
     }
+    Orientation angles = null;
+    HardwareMap hardwareMap;
+    BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
+    BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    // parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+
+    public DcMotor fl;
+    public DcMotor fr;
+    public DcMotor bl;
+    public DcMotor br;
+
 
     public void driveForward(double power){
         fl.setPower(power);
@@ -47,14 +47,5 @@ public class robot {
         fr.setPower(-power);
         bl.setPower(-power);
         br.setPower(-power);
-    }
-
-    public void turn(double angle){
-
-       // angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, BNO055IMU.AngleUnit.DEGREES);
-       // fl.setPower(power);
-      //  fr.setPower(power);
-      //  bl.setPower(power);
-      //  br.setPower(power);
     }
 }
