@@ -1,5 +1,5 @@
+//THIS ONE STARTS FURTHER FROM TEAM WAREHOUSE
 package org.firstinspires.ftc.teamcode;
-
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -14,24 +14,37 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
-@Autonomous(name="auto Carousel") //telling robot it is autonoumous
-public class autoCarousel extends LinearOpMode {
 
-    double CIRCUMFERENCEOFWHEEL = 603.25; //mm
+@Autonomous(name="Auto Carousel") //telling robot it is autonoumous
+public class autoCarousel extends LinearOpMode {
+    DcMotor fl = null;
+    DcMotor fr = null;
+    DcMotor bl = null;
+    DcMotor br = null;
+    CRServo crServo = null;
+
+    double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
     double GEARRATIO = 1;
     double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
 
-    Robot Robot = new Robot(hardwareMap);
-    BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
+    Orientation angles;
+
+    BNO055IMU imu;
+
+    Robot robot = new Robot();
+
     public void runOpMode(){
 
-        Robot.init();
+        robot.init(hardwareMap, telemetry);
 
         waitForStart();
         if(opModeIsActive()){
-            Robot.driveForward(.1);
+            telemetry.addData("test", "succes");
+            telemetry.update();
+            robot.rotate(90);
         }
     }
-
 }
+
+

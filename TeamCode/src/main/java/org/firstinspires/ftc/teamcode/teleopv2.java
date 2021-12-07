@@ -43,9 +43,16 @@ public class teleopv2 extends LinearOpMode { //main class
             }
             
             fl.setPower(-gamepad1.left_stick_y * speed);
-            fr.setPower(-gamepad1.right_stick_y * speed);
+            fr.setPower(-gamepad1.left_stick_y * speed);
             bl.setPower(-gamepad1.left_stick_y * speed);
-            br.setPower(-gamepad1.right_stick_y * speed);
+            br.setPower(-gamepad1.left_stick_y * speed);
+
+            fl.setPower(gamepad1.right_stick_x * speed);
+            fr.setPower(-gamepad1.right_stick_x * speed);
+            bl.setPower(gamepad1.right_stick_x * speed);
+            br.setPower(-gamepad1.right_stick_x * speed);
+
+
 
 
             crServo.setPower(gamepad1.right_trigger);
