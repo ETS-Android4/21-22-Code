@@ -17,11 +17,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name="Auto Carousel") //telling robot it is autonoumous
 public class autoCarousel extends LinearOpMode {
-    DcMotor fl = null;
-    DcMotor fr = null;
-    DcMotor bl = null;
-    DcMotor br = null;
-    CRServo crServo = null;
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
@@ -40,8 +35,7 @@ public class autoCarousel extends LinearOpMode {
 
         waitForStart();
         if(opModeIsActive()){
-            telemetry.addData("test", "succes");
-            telemetry.update();
+            robot.rotate(90);
             robot.rotate(90);
         }
     }

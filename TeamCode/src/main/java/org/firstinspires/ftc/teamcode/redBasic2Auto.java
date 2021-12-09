@@ -42,12 +42,13 @@ public class redBasic2Auto extends LinearOpMode {
 
         waitForStart();
         if(opModeIsActive()){
-            robot.driveForwardDistance(.5, (int) (205/TICKSTOMMTRAVEL)); //get away from wall
-            robot.rotate(90);
-            robot.driveForwardDistance(.5, (int) (762/TICKSTOMMTRAVEL)); //get away from wall
-            robot.servo(1, 5000);
-            robot.rotate(90);
-            robot.driveForwardDistance(.5, (int) (914.4/TICKSTOMMTRAVEL));
+            robot.driveForwardDistance(.5, (int) (90/TICKSTOMMTRAVEL)); //get away from wall
+            robot.rotate(100);
+            robot.driveForwardDistance(.25, (int) (556/TICKSTOMMTRAVEL)); //get away from wall
+            robot.servo(-1, 4400);
+            robot.driveBackDistance(.5, (int) (120/TICKSTOMMTRAVEL)); //go backwards
+            robot.rotate(0); //aim for storage unit
+            robot.driveForwardDistance(.5, (int) (450/TICKSTOMMTRAVEL)); //go to storage unit
         }
     }
 }

@@ -154,7 +154,7 @@ public class Robot {
         int totalTime = 0;
 
         double error = 90, P, I, D, integral = 0, derivative, correction, t, lastTime = 0, dt = 0.1, lastError = 90;
-        double kp = .011;
+        double kp = .0135;
         double ki = 0;
         double kd = .02;
         while(Math.abs(error) > 1){
