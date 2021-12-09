@@ -32,7 +32,8 @@ public class tankDrive extends LinearOpMode { //main class
         //myRobot.init();
 
 
-        double speed = 1;
+        double driveSpeed = 1;
+        double crSpeed = 0;
 
         telemetry.addData("Status", "Initalized");
         telemetry.update();
@@ -41,23 +42,27 @@ public class tankDrive extends LinearOpMode { //main class
 
             //if the "A" button is pressed, the speed will switch from 1 to 0.5 and vice versa
             if(gamepad1.a){
-                if(speed == 1){ //if the current increment is 1, it'll switch to 0.5
-                    speed = 0.5;
+                if(driveSpeed == 1){ //if the current increment is 1, it'll switch to 0.5
+                    driveSpeed = 0.5;
                 }
                 else{ //if the current increment is not 1, it'll switch to 1
-                    speed = 1;
+                    driveSpeed = 1;
                 }
             }
 
-            fl.setPower(-gamepad1.left_stick_y * speed);
-            fr.setPower(-gamepad1.right_stick_y * speed);
-            bl.setPower(-gamepad1.left_stick_y * speed);
-            br.setPower(-gamepad1.right_stick_y * speed);
+            fl.setPower(-gamepad1.left_stick_y * driveSpeed);
+            fr.setPower(-gamepad1.right_stick_y * driveSpeed);
+            bl.setPower(-gamepad1.left_stick_y * driveSpeed);
+            br.setPower(-gamepad1.right_stick_y * driveSpeed);
 
-            while(gamepad1.right_bumper){
-                crServo.setPower(-1);
+            if(gamepad1.right_bumper){
+                crSpeed = 1;
+
+            } else{
+                crSpeed = 0;
             }
             crServo.setPower(gamepad1.right_trigger);
+            crServo.setPower(crSpeed);
 
 
 

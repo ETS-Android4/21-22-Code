@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+
+
+import static android.os.SystemClock.sleep;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -30,27 +34,18 @@ public class Robot {
     double GEARRATIO = 1;
     double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
 
-    /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
 
     Orientation angles;
     BNO055IMU imu;
 
     Telemetry telemetry;
 
-    /* Constructor */
-    public Robot(){
-
-    }
-
-    /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap, Telemetry tele) {
-        // Save reference to Hardware map
+    public void init(HardwareMap ahwMap, Telemetry tele) { //pass in hardwaremap and telemetry in the code to init stuff
         hwMap = ahwMap;
         telemetry = tele;
 
-        // Define and Initialize Motors
+
         fl = hwMap.dcMotor.get("front_left_motor");
         fr = hwMap.dcMotor.get("front_right_motor");
         bl = hwMap.dcMotor.get("back_left_motor");
@@ -58,6 +53,7 @@ public class Robot {
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        crServo = hwMap.crservo.get("crServo");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -66,7 +62,6 @@ public class Robot {
         imu.initialize(parameters);
 
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-
 
     }
     public void driveForwardDistance(double power, int distance){
@@ -142,6 +137,10 @@ public class Robot {
         fr.setPower(0);
         bl.setPower(0);
         br.setPower(0);
+    }
+    public void servo(double power, int time){ //might not work look at sleep line
+        crServo.setPower(power);
+        sleep(time);
     }
     public void rotate(double wantedAngle){
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
