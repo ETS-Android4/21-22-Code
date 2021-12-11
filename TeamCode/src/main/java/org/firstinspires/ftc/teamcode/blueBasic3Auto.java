@@ -20,11 +20,6 @@ import java.security.KeyStore;
 
 @Autonomous(name="blueBasic3Auto") //telling robot it is autonoumous
 public class blueBasic3Auto extends LinearOpMode {
-    DcMotor fl = null;
-    DcMotor fr = null;
-    DcMotor bl = null;
-    DcMotor br = null;
-    CRServo crServo = null;
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
@@ -40,13 +35,9 @@ public class blueBasic3Auto extends LinearOpMode {
 
         waitForStart();
         if(opModeIsActive()){
-            robot.driveForwardDistance(.5, (int) (305/TICKSTOMMTRAVEL)); //get away from wall
-            robot.rotate(90); //rotate
-            robot.driveForwardDistance(.5, (int) (1920/TICKSTOMMTRAVEL)); //
-            robot.rotate(90);
-            robot.servo(.5, 3000); //spinny carousel
-            robot.rotate(90);
-            robot.driveBackDistance(.5, (int) (3048/TICKSTOMMTRAVEL)); //go all the way back to warehouse
+            robot.driveForwardDistance(.5, (int) (-180/TICKSTOMMTRAVEL)); //away from wall
+            robot.rotate(93); //face warehouse
+            robot.driveForwardDistance(1, (int) (-600/TICKSTOMMTRAVEL)); //into warehouse
         }
     }
 }

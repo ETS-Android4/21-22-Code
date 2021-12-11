@@ -49,6 +49,8 @@ public class redBasic2Auto extends LinearOpMode {
             robot.driveBackDistance(.5, (int) (120/TICKSTOMMTRAVEL)); //go backwards
             robot.rotate(0); //aim for storage unit
             robot.driveForwardDistance(.5, (int) (450/TICKSTOMMTRAVEL)); //go to storage unit
+            robot.rotate(90);
+            robot.driveForwardDistance(.25, (int) (120/TICKSTOMMTRAVEL));
         }
     }
 }
