@@ -2,12 +2,19 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+
 @TeleOp(name = "Tele w/ 1")
+
+@Autonomous(name = "Tele w/ 1")
+
 public class teleopOff extends LinearOpMode {
     public void runOpMode() {
         DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
@@ -24,6 +31,7 @@ public class teleopOff extends LinearOpMode {
         double servoSpinSpeed = 0;
         double servoLiftSpeed = 0;
         boolean rightbumper;
+
 
         telemetry.addData("Status", "Initalized");
         telemetry.update();
@@ -46,6 +54,7 @@ public class teleopOff extends LinearOpMode {
 
             if (gamepad1.right_bumper) {
                 servoSpinSpeed = 1;
+
                 rightbumper = true;
 
             } else {
@@ -64,6 +73,21 @@ public class teleopOff extends LinearOpMode {
 
             liftServo.setPower(gamepad1.right_trigger);
             liftServo.setPower(-gamepad1.left_trigger);
+
+
+            } else {
+                servoSpinSpeed = 0;
+            }
+            spinServo.setPower(-gamepad1.right_trigger);
+            spinServo.setPower(servoSpinSpeed);
+
+            if(gamepad1.left_bumper){
+                servoLiftSpeed = 1;
+            } else {
+                servoLiftSpeed = 0;
+            }
+            liftServo.setPower(-gamepad1.right_trigger);
+            liftServo.setPower(servoLiftSpeed);
 
 
             telemetry.addData("Status", "Running");

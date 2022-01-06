@@ -19,37 +19,41 @@ import java.security.KeyStore;
 
 @Autonomous(name="autoBlue4") //telling robot it is autonoumous
 public class blueBasic4Auto extends LinearOpMode {
-    DcMotor fl = null;
-    DcMotor fr = null;
-    DcMotor bl = null;
-    DcMotor br = null;
-    CRServo crServo = null;
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
     double GEARRATIO = 1;
-    double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
+    double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL / ENCODERTICKS) * GEARRATIO;
+
 
     Orientation angles;
 
     BNO055IMU imu;
     Robot robot = new Robot();
 
-    public void runOpMode(){
+    public void runOpMode() {
 
         robot.init(hardwareMap, telemetry);
 
+
         waitForStart();
-        if(opModeIsActive()){
-            robot.driveForwardDistance(.5, (int) (90/TICKSTOMMTRAVEL)); //get away from wall
-            robot.rotate(-100);
-            robot.driveForwardDistance(.25, (int) (556/TICKSTOMMTRAVEL)); //get away from wall
-            robot.servo(-1, 4400);
-            robot.driveBackDistance(.5, (int) (-120/TICKSTOMMTRAVEL)); //go backwards
-            robot.rotate(0); //aim for storage unit
-            robot.driveForwardDistance(.5, (int) (-450/TICKSTOMMTRAVEL)); //go to storage unit
-            robot.rotate(-90);
-            robot.driveForwardDistance(.25, (int) (120/TICKSTOMMTRAVEL));
+            if (opModeIsActive()) {
+                robot.driveForwardDistance(.5, (int) (90 / TICKSTOMMTRAVEL)); //get away from wall
+                robot.driveForwardDistance(.25, (int) (556 / TICKSTOMMTRAVEL)); //get away from wall
+
+                robot.servo(-1, 4400);
+                robot.driveBackDistance(.5, (int) (-120 / TICKSTOMMTRAVEL)); //go backwards
+                robot.rotate(0); //aim for storage unit
+                robot.driveForwardDistance(.5, (int) (-450 / TICKSTOMMTRAVEL)); //go to storage unit
+                robot.rotate(-90);
+
+                robot.servo(1, 4400);
+                robot.driveBackDistance(.5, (int) (-120 / TICKSTOMMTRAVEL)); //go backwards
+                robot.rotate(0); //aim for storage unit
+                robot.driveForwardDistance(.5, (int) (-450 / TICKSTOMMTRAVEL)); //go to storage unit
+                robot.rotate(90);
+
+                robot.driveForwardDistance(.25, (int) (120 / TICKSTOMMTRAVEL));
+            }
         }
     }
-}

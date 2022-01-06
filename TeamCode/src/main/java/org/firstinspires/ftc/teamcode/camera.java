@@ -53,6 +53,7 @@ public class camera extends OpenCvPipeline {
     static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(1,160);
     static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(141,160);
     static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(200,160);
+
     static final int REGION_WIDTH = 20;
     static final int REGION_HEIGHT = 20;
 
