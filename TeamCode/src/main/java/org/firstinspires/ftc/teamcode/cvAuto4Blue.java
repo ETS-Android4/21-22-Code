@@ -9,8 +9,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name="autoCarousel")
-public class autoCarousel extends LinearOpMode {
+@Autonomous(name="Blue4")
+public class cvAuto4Blue extends LinearOpMode {
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
@@ -21,7 +21,6 @@ public class autoCarousel extends LinearOpMode {
 
     public void runOpMode() {
         robot.init(hardwareMap,telemetry);
-
         OpenCvWebcam webcam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -30,6 +29,20 @@ public class autoCarousel extends LinearOpMode {
 
         pipeline = new camera();
         webcam.setPipeline(pipeline);
+
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                /*
+                 * This will be called if the camera could not be opened
+                 */
+            }
+        });
 
         waitForStart();
         while (opModeIsActive()) {
@@ -42,10 +55,11 @@ public class autoCarousel extends LinearOpMode {
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
                 robot.rotate(-90);
                 //this is where arm things are supposed to happen place on level based on spawn location
-                robot.rotate(-180);
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(-90);
-                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL));
+                robot.rotate(-180);
+                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
+                robot.rotate(-150);
+                robot.servo(.25, 4400);
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.CENTER) {
                 telemetry.addData("center", "found item in center box");
@@ -53,10 +67,11 @@ public class autoCarousel extends LinearOpMode {
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
                 robot.rotate(-90);
                 //this is where arm things are supposed to happen place on level based on spawn location
-                robot.rotate(-180);
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(-90);
-                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL));
+                robot.rotate(-180);
+                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
+                robot.rotate(-150);
+                robot.servo(.25, 4400);
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.LEFT) {
                 telemetry.addData("left", "found item in left box");
@@ -64,10 +79,11 @@ public class autoCarousel extends LinearOpMode {
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
                 robot.rotate(-90);
                 //this is where arm things are supposed to happen place on level based on spawn location
-                robot.rotate(-180);
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(-90);
-                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL));
+                robot.rotate(-180);
+                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
+                robot.rotate(-150);
+                robot.servo(.25, 4400);
             }
             sleep(5000);
         }

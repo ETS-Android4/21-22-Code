@@ -1,4 +1,4 @@
-//THIS ONE STARTS FURTHER FROM TEAM WAREHOUSE
+//THIS ONE STARTS CLOSE TO ALLIANCE WAREHOUSE
 package org.firstinspires.ftc.teamcode;
 
 
@@ -33,11 +33,9 @@ public class redBasic1Auto extends LinearOpMode {
 
         waitForStart();
         if(opModeIsActive()){
-            robot.driveForwardDistance(.5, (int) (305/TICKSTOMMTRAVEL)); //get away from wall
-            robot.rotate(90); //rotate
-            robot.driveForwardDistance(.5, (int) (1600/TICKSTOMMTRAVEL)); //go to carousel
-            robot.servo(.5, 3000); //spinny carousel
-            robot.driveBackDistance(.5, (int) (3048/TICKSTOMMTRAVEL)); //go all the way back to warehouse
+            robot.driveForwardDistance(.5, (int) (180/TICKSTOMMTRAVEL)); //away from wall
+            robot.rotate(-93); //face warehouse
+            robot.driveForwardDistance(1, (int) (600/TICKSTOMMTRAVEL)); //into warehouse
         }
     }
 

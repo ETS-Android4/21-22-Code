@@ -27,7 +27,11 @@ public class Robot {
     DcMotor fr = null;
     DcMotor bl = null;
     DcMotor br = null;
+    DcMotor ar = null;
     CRServo crServo = null;
+    Servo clawServo = null;
+
+    boolean clawOpen = true;
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
@@ -50,10 +54,12 @@ public class Robot {
         fr = hwMap.dcMotor.get("front_right_motor");
         bl = hwMap.dcMotor.get("back_left_motor");
         br = hwMap.dcMotor.get("back_right_motor");
+        ar = hwMap.dcMotor.get("arm_motor");
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         crServo = hwMap.crservo.get("crServo");
+        clawServo = hwMap.servo.get("claw_servo");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -210,5 +216,32 @@ public class Robot {
         fr.setPower(0);
         bl.setPower(0);
         br.setPower(0);
+    }
+    public void lift(double height)
+    {
+        double multy = 5; //temp number
+        //some calc that will conver height into encoder ticks
+        double encTicks = height * multy;
+
+        ar.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ar.setTargetPosition((int) encTicks);
+        ar.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        ar.setPower(.5);
+
+        while(ar.isBusy()) {
+        }
+
+        ar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    public void clawOpen() //open/close
+    {
+        double ninja = 5; //ninja from -180 to +180
+        clawServo.setPosition(ninja);
+
+    }
+    public void clawClamp(){
+        double pirateos = 5; //-180 to +180
+        clawServo.setPosition(pirateos);
     }
 }

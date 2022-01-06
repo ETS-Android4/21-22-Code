@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -16,22 +17,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.security.KeyStore;
 
-@Autonomous(name="spinTest1") //telling robot it is autonoumous
+@TeleOp(name="spinTest1") //telling robot it is autonoumous
 public class spinnerTest extends LinearOpMode {
     DcMotor fl = null;
     DcMotor fr = null;
     DcMotor bl = null;
     DcMotor br = null;
-    CRServo crServo = null;
-
-    double CIRCUMFERENCEOFWHEEL = 298.5; //mm
-    double ENCODERTICKS = 537.7;
-    double GEARRATIO = 1;
-    double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
-
-    Orientation angles;
-
-    BNO055IMU imu;
 
     public void runOpMode(){
         fl = hardwareMap.dcMotor.get("front_left_motor");
@@ -41,20 +32,22 @@ public class spinnerTest extends LinearOpMode {
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        crServo = hardwareMap.crservo.get("crServo");
+        //crServo = hardwareMap.crservo.get("crServo");
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        imu.initialize(parameters);
+        //imu = hardwareMap.get(BNO055IMU.class, "imu");
+       // BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+       // parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+       // parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+       // imu.initialize(parameters);
 
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+       // angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
         waitForStart();
-        if(opModeIsActive()){
-            crServo.setPower(1);
-            sleep(5000);
+        while(opModeIsActive()){
+            fl.setPower(-gamepad1.left_stick_y);
+            fr.setPower(-gamepad1.right_stick_y);
+            bl.setPower(-gamepad1.left_stick_y);
+            br.setPower(-gamepad1.right_stick_y);
         }
     }
 }
