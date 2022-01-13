@@ -27,9 +27,10 @@ public class Robot {
     DcMotor fr = null;
     DcMotor bl = null;
     DcMotor br = null;
-    DcMotor ar = null;
+
     CRServo crServo = null;
     Servo clawServo = null;
+    CRServo liftServo = null;
 
     boolean clawOpen = true;
 
@@ -54,12 +55,12 @@ public class Robot {
         fr = hwMap.dcMotor.get("front_right_motor");
         bl = hwMap.dcMotor.get("back_left_motor");
         br = hwMap.dcMotor.get("back_right_motor");
-        ar = hwMap.dcMotor.get("arm_motor");
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         crServo = hwMap.crservo.get("crServo");
         clawServo = hwMap.servo.get("claw_servo");
+        liftServo = hwMap.crservo.get("liftServo");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -144,9 +145,10 @@ public class Robot {
         bl.setPower(0);
         br.setPower(0);
     }
-    public void servo(double power, int time){ //might not work look at sleep line
+    public void servo(double power, long time){ //might not work look at sleep line
         crServo.setPower(power);
         sleep(time);
+        crServo.setPower(0);
     }
     public void rotate(double wantedAngle){
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -217,29 +219,26 @@ public class Robot {
         bl.setPower(0);
         br.setPower(0);
     }
-    public void lift(double height)
-    {
-        double multy = 5; //temp number
-        //some calc that will conver height into encoder ticks
-        double encTicks = height * multy;
+    public void lift(long millis) {
 
-        ar.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ar.setTargetPosition((int) encTicks);
-        ar.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftServo.setPower(1);
+        sleep(millis);
+        liftServo.setPower(0);
 
-        ar.setPower(.5);
-
-        while(ar.isBusy()) {
-        }
-
-        ar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void clawOpen() //open/close
-    {
+
+    public void liftDown(long millis){
+        liftServo.setPower(-1);
+        sleep(millis);
+        liftServo.setPower(0);
+    }
+
+    public void clawOpen(){
         double ninja = 5; //ninja from -180 to +180
         clawServo.setPosition(ninja);
 
     }
+
     public void clawClamp(){
         double pirateos = 5; //-180 to +180
         clawServo.setPosition(pirateos);

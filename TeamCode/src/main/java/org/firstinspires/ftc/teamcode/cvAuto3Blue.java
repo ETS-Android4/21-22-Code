@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name="Blue3")
+@Autonomous(name="Blue top w/ white wh")
 public class cvAuto3Blue extends LinearOpMode {
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
@@ -52,37 +52,42 @@ public class cvAuto3Blue extends LinearOpMode {
             if (pipeline.getAnalysis() == camera.SkystonePosition.RIGHT) {
                 telemetry.addData("right", "found item in right box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                //this is where arm things are supposed to happen place on level based on spawn location
-                robot.rotate(180);
-                robot.driveForwardDistance(.25, (int) (410/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.rotate(45);
+                robot.lift(5000);
+                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.clawOpen();
+                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to warehouse
+                robot.liftDown(5000);
+                robot.rotate(-90);
+                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL)); //go to white warehouse
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.CENTER) {
                 telemetry.addData("center", "found item in center box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                //this is where arm things are supposed to happen place on level based on spawn location
-                robot.rotate(180);
-                robot.driveForwardDistance(.25, (int) (410/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.rotate(45);
+                robot.lift(2500);
+                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.clawOpen();
+                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to warehouse
+                robot.liftDown(2500);
+                robot.rotate(-90);
+                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL)); //go to white warehouse
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.LEFT) {
                 telemetry.addData("left", "found item in left box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                //this is where arm things are supposed to happen place on level based on spawn location
-                robot.rotate(180);
-                robot.driveForwardDistance(.25, (int) (410/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.rotate(45);
+                robot.lift(5000);
+                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.clawOpen();
+                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to warehouse
+                robot.liftDown(0);
+                robot.rotate(-90);
+                robot.driveForwardDistance(1, (int) (1000/TICKSTOMMTRAVEL)); //go to white warehouse
             }
-            sleep(5000);
         }
     }
 }

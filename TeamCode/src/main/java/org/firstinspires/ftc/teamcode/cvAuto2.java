@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name="Red2")
+@Autonomous(name="Bottom Red w/cara")
 public class cvAuto2 extends LinearOpMode {
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
@@ -52,40 +52,57 @@ public class cvAuto2 extends LinearOpMode {
             if (pipeline.getAnalysis() == camera.SkystonePosition.RIGHT) {
                 telemetry.addData("right", "found item in right box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                //this is where arm things are supposed to happen place on level based on spawn location
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.rotate(45);
+                robot.lift(5000);
+                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.clawOpen();
+                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
+                robot.liftDown(5000);
                 robot.rotate(180);
-                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
-                robot.rotate(150);
-                robot.servo(.25, 4400);
+                robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
+                robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); // go to parking
+                robot.rotate(0);
+                robot.driveForwardDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.rotate(-90);
+                robot.driveForwardDistance(.5, (int) (300/TICKSTOMMTRAVEL));
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.CENTER) {
                 telemetry.addData("center", "found item in center box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                //this is where arm things are supposed to happen place on level based on spawn location
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.rotate(45);
+                robot.lift(2500);
+                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.clawOpen();
+                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
+                robot.liftDown(2500);
                 robot.rotate(180);
-                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
-                robot.rotate(150);
-                robot.servo(.25, 4400);
+                robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
+                robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); //go to parking
+                robot.rotate(0);
+                robot.driveForwardDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.rotate(-90);
+                robot.driveForwardDistance(.5, (int) (300/TICKSTOMMTRAVEL));
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.LEFT) {
                 telemetry.addData("left", "found item in left box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(90);
-                //this is where arm things are supposed to happen place on level based on spawn location
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.rotate(45);
+                robot.lift(0);
+                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.liftDown(0);
+                robot.clawOpen();
+                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
                 robot.rotate(180);
-                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
-                robot.rotate(150);
-                robot.servo(.25, 4400);
+                robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
+                robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); //go to parking
+                robot.rotate(0);
+                robot.driveForwardDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.rotate(-90);
+                robot.driveForwardDistance(.5, (int) (300/TICKSTOMMTRAVEL));
             }
-            sleep(5000);
         }
     }
 }
