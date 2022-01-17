@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 
+import static android.os.SystemClock.currentThreadTimeMillis;
 import static android.os.SystemClock.sleep;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -27,6 +28,7 @@ public class Robot {
     DcMotor fr = null;
     DcMotor bl = null;
     DcMotor br = null;
+    DcMotor lift = null;
 
     CRServo crServo = null;
     Servo clawServo = null;
@@ -55,12 +57,16 @@ public class Robot {
         fr = hwMap.dcMotor.get("front_right_motor");
         bl = hwMap.dcMotor.get("back_left_motor");
         br = hwMap.dcMotor.get("back_right_motor");
+        lift = hwMap.dcMotor.get("lift_dcMotor");
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        //bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        br.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         crServo = hwMap.crservo.get("crServo");
-        clawServo = hwMap.servo.get("claw_servo");
-        liftServo = hwMap.crservo.get("liftServo");
+        clawServo = hwMap.servo.get("clawServo");
+        //liftServo = hwMap.crservo.get("liftServo");
+
 
         imu = hwMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -221,20 +227,27 @@ public class Robot {
     }
     public void lift(long millis) {
 
-        liftServo.setPower(1);
+        //liftServo.setPower(1);
         sleep(millis);
-        liftServo.setPower(0);
+        //liftServo.setPower(0);
 
     }
 
-    public void liftDown(long millis){
-        liftServo.setPower(-1);
+    public void liftMotor(int millis, double power){
+        lift.setPower(power);
         sleep(millis);
-        liftServo.setPower(0);
+        lift.setPower(0);
+
     }
+
+    //public void liftDown(long millis){
+      //  liftServo.setPower(-1);
+        //sleep(millis);
+        //liftServo.setPower(0);
+    //}
 
     public void clawOpen(){
-        double ninja = 5; //ninja from -180 to +180
+        double ninja = 0; //ninja from -180 to +180
         clawServo.setPosition(ninja);
 
     }

@@ -21,12 +21,21 @@ public class autoTest extends LinearOpMode {
     DcMotor bl = null;
     DcMotor br = null;
 
+    double CIRCUMFERENCEOFWHEEL = 298.5; //mm
+    double ENCODERTICKS = 537.7;
+    double GEARRATIO = 1;
+    double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
+
+    Robot robot = new Robot();
+
     public void runOpMode(){
         OpenCvWebcam webcam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
         camera pipeline;
+
+        robot.init(hardwareMap,telemetry);
 
         pipeline = new camera();
         webcam.setPipeline(pipeline);
@@ -46,15 +55,15 @@ public class autoTest extends LinearOpMode {
         });
 
         waitForStart();
-        while(opModeIsActive()){
-            telemetry.addData("img analysis", pipeline.getAnalysis());
-            telemetry.update();
 
-            if(pipeline.getAnalysis() == camera.SkystonePosition.RIGHT){
-                telemetry.addData("right", "found item in right box");
-                telemetry.update();
-            }
-            sleep(5000);
+        robot.clawClamp();
+        if(opModeIsActive()){
+            robot.clawClamp();
+            sleep(1000);
+
+            robot.liftMotor(100, -1);
+
+
         }
     }
 }

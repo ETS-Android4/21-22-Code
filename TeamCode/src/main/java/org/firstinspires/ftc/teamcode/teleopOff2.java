@@ -19,12 +19,12 @@ public class teleopOff2 extends LinearOpMode {
         DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
         DcMotor bl = hardwareMap.dcMotor.get("back_left_motor");
         DcMotor br = hardwareMap.dcMotor.get("back_right_motor");
+        DcMotor lift = hardwareMap.dcMotor.get("lift_dcMotor");
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        //bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        br.setDirection(DcMotorSimple.Direction.REVERSE);
 
         CRServo spinServo = hardwareMap.crservo.get("crServo");
-        CRServo liftServo = hardwareMap.crservo.get("liftServo");
-
         Servo clawServo = hardwareMap.servo.get("clawServo");
 
         double driveSpeed = 1;
@@ -55,31 +55,37 @@ public class teleopOff2 extends LinearOpMode {
             br.setPower(-gamepad1.right_stick_y * driveSpeed);
 
             //spin carousel servo gamepad2
-            if (gamepad2.right_bumper) {
+            if (gamepad2.right_bumper)
+            {
                 servoSpinSpeed = 1;
 
-            } else {
+            }
+            else if (gamepad2.left_bumper)
+            {
+                servoSpinSpeed = -1;
+
+            }
+            else if (gamepad2.right_bumper && gamepad2.left_bumper)
+            {
                 servoSpinSpeed = 0;
             }
-
-            //spin carousel servo other way gamepad2
-            if(gamepad2.left_bumper){
-                servoSpinSpeed = -1;
-            } else {
+            else
+            {
                 servoSpinSpeed = 0;
+
             }
             spinServo.setPower(servoSpinSpeed);
 
             //lift servo gamepad2
-            liftServo.setPower(gamepad2.right_trigger);
-            liftServo.setPower(-gamepad2.left_trigger);
+            lift.setPower(gamepad2.right_trigger);
+            lift.setPower(-gamepad2.left_trigger);
 
             //lift servo gamepad2
-            if(gamepad2.a){
-                clawServo.setPosition(servoClawPosClose);
+            if(gamepad2.x){
+                clawServo.setPosition(5);
             }
             if(gamepad2.b){
-                clawServo.setPosition(servoClawPosOpen);
+                clawServo.setPosition(0);
             }
 
             telemetry.addData("Status", "Running");

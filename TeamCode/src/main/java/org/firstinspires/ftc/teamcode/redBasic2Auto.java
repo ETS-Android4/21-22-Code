@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.security.KeyStore;
 
-@Autonomous(name="autoRed2") //telling robot it is autonoumous
+@Autonomous(name="basic red w/ carousel") //telling robot it is autonoumous
 public class redBasic2Auto extends LinearOpMode {
     DcMotor fl = null;
     DcMotor fr = null;
@@ -38,18 +38,33 @@ public class redBasic2Auto extends LinearOpMode {
     public void runOpMode(){
 
         robot.init(hardwareMap, telemetry);
+        //robot.clawClamp();
 
         waitForStart();
         if(opModeIsActive()){
-            robot.driveForwardDistance(.5, (int) (90/TICKSTOMMTRAVEL)); //get away from wall
-            robot.rotate(100);
-            robot.driveForwardDistance(.25, (int) (556/TICKSTOMMTRAVEL)); //get away from wall
+            robot.clawClamp();
+            sleep(100);
+            robot.driveForwardDistance(.4, (int) (610/TICKSTOMMTRAVEL));
+            robot.rotate(-45);
+            robot.liftMotor(100, -1);
+            robot.driveForwardDistance(.4, (int) (220/TICKSTOMMTRAVEL));
+            robot.clawOpen();
+            sleep(500);
+            robot.driveBackDistance(.4, (int) (150/TICKSTOMMTRAVEL));
+            //robot.liftMotor(500, 1);
+            robot.driveBackDistance(.4, (int) (70/TICKSTOMMTRAVEL));
+            robot.rotate(0);
+            robot.driveBackDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+            robot.driveForwardDistance(.5, (int) (220/TICKSTOMMTRAVEL));
+            robot.rotate(-90);
+            robot.driveBackDistance(.5, (int) (620/TICKSTOMMTRAVEL));
+            robot.rotate(-25);
+            robot.driveBackDistance(.5, (int) (250/TICKSTOMMTRAVEL));
             robot.servo(-1, 4400);
-            robot.driveBackDistance(.5, (int) (120/TICKSTOMMTRAVEL)); //go backwards
-            robot.rotate(0); //aim for storage unit
-            robot.driveForwardDistance(.5, (int) (450/TICKSTOMMTRAVEL)); //go to storage unit
-            robot.rotate(90);
-            robot.driveForwardDistance(.25, (int) (120/TICKSTOMMTRAVEL));
+            robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
+            robot.rotate(0);
+            robot.driveForwardDistance(.5, (int) (250/TICKSTOMMTRAVEL));
+            robot.rotate(0);
         }
     }
 }

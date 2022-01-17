@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.security.KeyStore;
 
-@Autonomous(name="autoBlue3") //telling robot it is autonoumous
+@Autonomous(name="simple Blue w/ wh") //telling robot it is autonoumous
 public class blueBasic3Auto extends LinearOpMode {
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
@@ -30,12 +30,20 @@ public class blueBasic3Auto extends LinearOpMode {
     public void runOpMode(){
 
         robot.init(hardwareMap, telemetry);
+        robot.clawClamp();
 
         waitForStart();
         if(opModeIsActive()){
-            robot.driveForwardDistance(.5, (int) (-180/TICKSTOMMTRAVEL)); //away from wall
-            robot.rotate(93); //face warehouse
-            robot.driveForwardDistance(1, (int) (-600/TICKSTOMMTRAVEL)); //into warehouse
+            robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+            robot.rotate(-45);
+            robot.liftMotor(150, -1);
+            robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL)); //random number
+            robot.clawOpen();
+            sleep(500);
+            robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
+            //robot.liftMotor(500, 1);
+            robot.rotate(90);
+            robot.driveForwardDistance(1, (int) (2000/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
         }
     }
 

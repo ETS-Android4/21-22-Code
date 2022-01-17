@@ -54,11 +54,11 @@ public class cvAuto2 extends LinearOpMode {
                 telemetry.update();
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
                 robot.rotate(45);
-                robot.lift(5000);
+                //robot.lift(5000);
                 robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
                 robot.clawOpen();
                 robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
-                robot.liftDown(5000);
+                //robot.liftDown(5000);
                 robot.rotate(180);
                 robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
                 robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); // go to parking
@@ -72,11 +72,11 @@ public class cvAuto2 extends LinearOpMode {
                 telemetry.update();
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
                 robot.rotate(45);
-                robot.lift(2500);
+                //robot.lift(2500);
                 robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
                 robot.clawOpen();
                 robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
-                robot.liftDown(2500);
+                //robot.liftDown(2500);
                 robot.rotate(180);
                 robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
                 robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); //go to parking
@@ -90,9 +90,9 @@ public class cvAuto2 extends LinearOpMode {
                 telemetry.update();
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
                 robot.rotate(45);
-                robot.lift(0);
+                //robot.lift(0);
                 robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
-                robot.liftDown(0);
+                //robot.liftDown(0);
                 robot.clawOpen();
                 robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
                 robot.rotate(180);
