@@ -19,7 +19,7 @@ public class autoCarousel extends LinearOpMode {
 
     Robot robot = new Robot();
 
-    public void runOpMode() {
+    public void runOpMode() { //wow
         robot.init(hardwareMap,telemetry);
 
         OpenCvWebcam webcam;
