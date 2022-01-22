@@ -48,11 +48,18 @@ public class teleopOff2 extends LinearOpMode {
                 }
             }
 
-            //tank drive gamepad1
-            fl.setPower(-gamepad1.left_stick_y * driveSpeed);
-            fr.setPower(-gamepad1.right_stick_y * driveSpeed);
-            bl.setPower(-gamepad1.left_stick_y * driveSpeed);
-            br.setPower(-gamepad1.right_stick_y * driveSpeed);
+            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = gamepad1.right_stick_x;
+            final double v1 = r * Math.cos(robotAngle) + rightX;
+            final double v2 = r * Math.sin(robotAngle) - rightX;
+            final double v3 = r * Math.sin(robotAngle) + rightX;
+            final double v4 = r * Math.cos(robotAngle) - rightX;
+
+            fl.setPower(v1);
+            fr.setPower(v2);
+            bl.setPower(v3);
+            br.setPower(v4);
 
             //spin carousel servo gamepad2
             if (gamepad2.right_bumper)

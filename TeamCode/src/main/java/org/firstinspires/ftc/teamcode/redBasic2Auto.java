@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.security.KeyStore;
 
-@Autonomous(name="basic red w/ carousel") //telling robot it is autonoumous
+@Autonomous(name="basic red w/ carousel", group="Basic Autos") //telling robot it is autonoumous
 public class redBasic2Auto extends LinearOpMode {
     DcMotor fl = null;
     DcMotor fr = null;
@@ -60,7 +60,7 @@ public class redBasic2Auto extends LinearOpMode {
             robot.driveBackDistance(.5, (int) (620/TICKSTOMMTRAVEL));
             robot.rotate(-25);
             robot.driveBackDistance(.5, (int) (250/TICKSTOMMTRAVEL));
-            robot.servo(-1, 4400);
+            robot.duckServo(-1, 4400);
             robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
             robot.rotate(0);
             robot.driveForwardDistance(.5, (int) (250/TICKSTOMMTRAVEL));

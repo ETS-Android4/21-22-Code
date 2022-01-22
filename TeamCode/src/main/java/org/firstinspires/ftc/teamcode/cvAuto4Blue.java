@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name="Blue4")
+@Autonomous(name="Bottom blue w/cara", group="cvAutos")
 public class cvAuto4Blue extends LinearOpMode {
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
@@ -66,7 +66,7 @@ public class cvAuto4Blue extends LinearOpMode {
                 robot.rotate(90);
                 robot.driveBackDistance(.5, (int) (650/TICKSTOMMTRAVEL));
                 robot.rotate(25);
-                robot.servo(1, 4400);
+                robot.duckServo(1, 4400);
                 robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
                 robot.rotate(0);
                 robot.driveForwardDistance(.5, (int) (550/TICKSTOMMTRAVEL));
@@ -89,7 +89,7 @@ public class cvAuto4Blue extends LinearOpMode {
                 robot.rotate(90);
                 robot.driveBackDistance(.5, (int) (650/TICKSTOMMTRAVEL));
                 robot.rotate(25);
-                robot.servo(1, 4400);
+                robot.duckServo(1, 4400);
                 robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
                 robot.rotate(0);
                 robot.driveForwardDistance(.5, (int) (550/TICKSTOMMTRAVEL));
@@ -112,7 +112,7 @@ public class cvAuto4Blue extends LinearOpMode {
                 robot.rotate(90);
                 robot.driveBackDistance(.5, (int) (650/TICKSTOMMTRAVEL));
                 robot.rotate(25);
-                robot.servo(1, 4400);
+                robot.duckServo(1, 4400);
                 robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
                 robot.rotate(0);
                 robot.driveForwardDistance(.5, (int) (550/TICKSTOMMTRAVEL));

@@ -17,10 +17,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.security.KeyStore;
 
-@Autonomous(name="basicRed w/ wh", group="Basic Autos") //telling robot it is autonoumous
-public class redBasic1Auto extends LinearOpMode {
+@Autonomous(name="basic Blue w/ wh", group="Basic Autos") //telling robot it is autonoumous
+public class basicBlue3Auto extends LinearOpMode {
 
-    //four rotations for lift all up
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm
     double ENCODERTICKS = 537.7;
     double GEARRATIO = 1;
@@ -31,21 +30,19 @@ public class redBasic1Auto extends LinearOpMode {
     public void runOpMode(){
 
         robot.init(hardwareMap, telemetry);
-       // robot.clawClamp();
+        robot.clawClamp();
 
         waitForStart();
         if(opModeIsActive()){
-            robot.clawClamp();
-            sleep(100);
-            robot.driveForwardDistance(.4, (int) (610/TICKSTOMMTRAVEL));
-            robot.rotate(45);
-            robot.liftMotor(100, -1);
-            robot.driveForwardDistance(.4, (int) (220/TICKSTOMMTRAVEL)); //random number
+            robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+            robot.rotate(-45);
+            robot.liftMotor(150, -1);
+            robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL)); //random number
             robot.clawOpen();
             sleep(500);
-            robot.driveBackDistance(.4, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
+            robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
             //robot.liftMotor(500, 1);
-            robot.rotate(-90);
+            robot.rotate(90);
             robot.driveForwardDistance(1, (int) (2000/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
         }
     }

@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name="Red top w/ white wh")
+@Autonomous(name="Red top w/ white wh", group="cvAutos")
 //RED TOP STARTING PLACE
 public class cvAuto1 extends LinearOpMode {
 

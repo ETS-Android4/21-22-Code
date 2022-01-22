@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name="Bottom Red w/cara")
+@Autonomous(name="Bottom Red w/cara", group="cvAutos")
 public class cvAuto2 extends LinearOpMode {
 
     double CIRCUMFERENCEOFWHEEL = 298.5; //mm

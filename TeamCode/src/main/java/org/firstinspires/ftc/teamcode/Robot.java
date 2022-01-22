@@ -32,11 +32,8 @@ public class Robot {
 
     CRServo crServo = null;
     Servo clawServo = null;
-    CRServo liftServo = null;
 
-    boolean clawOpen = true;
-
-    double CIRCUMFERENCEOFWHEEL = 298.5; //mm
+    double CIRCUMFERENCEOFWHEEL = 314.159; //mm
     double ENCODERTICKS = 537.7;
     double GEARRATIO = 1;
     double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
@@ -76,6 +73,10 @@ public class Robot {
 
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
+    }
+
+    public int tickToMM(double mm){
+        return (int) (mm/TICKSTOMMTRAVEL);
     }
     public void driveForwardDistance(double power, int distance){
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -133,6 +134,62 @@ public class Robot {
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+    public void driveRightDistance(double power, int distance){
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        fl.setTargetPosition(distance);
+        fr.setTargetPosition(-distance);
+        bl.setTargetPosition(distance);
+        br.setTargetPosition(-distance);
+
+        fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        driveBack(power);
+
+        while(fl.isBusy() && fr.isBusy() && bl.isBusy() && br.isBusy())
+        {
+
+        }
+        stopDriving();
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    public void driveLeftDistance(double power, int distance){
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        fl.setTargetPosition(-distance);
+        fr.setTargetPosition(distance);
+        bl.setTargetPosition(-distance);
+        br.setTargetPosition(distance);
+
+        fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        driveBack(power);
+
+        while(fl.isBusy() && fr.isBusy() && bl.isBusy() && br.isBusy())
+        {
+
+        }
+        stopDriving();
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
     private void driveForward(double power) {
         fl.setPower(power);
         fr.setPower(power);
@@ -151,7 +208,7 @@ public class Robot {
         bl.setPower(0);
         br.setPower(0);
     }
-    public void servo(double power, long time){ //might not work look at sleep line
+    public void duckServo(double power, long time){ //might not work look at sleep line
         crServo.setPower(power);
         sleep(time);
         crServo.setPower(0);
@@ -225,26 +282,19 @@ public class Robot {
         bl.setPower(0);
         br.setPower(0);
     }
-    public void lift(long millis) {
 
-        //liftServo.setPower(1);
-        sleep(millis);
-        //liftServo.setPower(0);
-
-    }
-
-    public void liftMotor(int millis, double power){
+    public void liftMotor(int ticks, double power){
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setTargetPosition(ticks);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(power);
-        sleep(millis);
+        while(lift.isBusy()){
+
+        }
         lift.setPower(0);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-
-    //public void liftDown(long millis){
-      //  liftServo.setPower(-1);
-        //sleep(millis);
-        //liftServo.setPower(0);
-    //}
 
     public void clawOpen(){
         double ninja = 0; //ninja from -180 to +180
