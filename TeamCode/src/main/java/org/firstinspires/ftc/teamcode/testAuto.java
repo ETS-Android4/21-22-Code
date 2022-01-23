@@ -54,15 +54,17 @@ public class testAuto extends LinearOpMode {
             }
         });
 
+        DcMotor lift = hardwareMap.dcMotor.get("lift_dcMotor");
+
         waitForStart();
 
         robot.clawClamp();
-        if(opModeIsActive()){
-            robot.clawClamp();
-            sleep(1000);
+        while(opModeIsActive()){
+            //robot.clawClamp();
+            //sleep(1000);
 
-            robot.liftMotor(100, -1);
-
+            //robot.liftMotor(100, -1);
+            lift.setPower(1);
 
         }
     }

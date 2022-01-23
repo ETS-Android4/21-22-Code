@@ -48,18 +48,26 @@ public class teleopOff2 extends LinearOpMode {
                 }
             }
 
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = gamepad1.right_stick_x;
+            double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y); //finds hypotenuse (power of each motor)
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4; //finds angle of robot subtracted by pi/4 bc
+            //it "shifts" the powers to each motor CW
+            double rightX = -gamepad1.right_stick_x; //for rotating w/ right stick
+
             final double v1 = r * Math.cos(robotAngle) + rightX;
             final double v2 = r * Math.sin(robotAngle) - rightX;
             final double v3 = r * Math.sin(robotAngle) + rightX;
             final double v4 = r * Math.cos(robotAngle) - rightX;
+            /*
+                r is mulitplier for power
+                math.cos is used for fl and br bc fl&br are used to go diagonal top right, if you want to go faster to the right apply more power to
+                those motors so closer joystick is to x axis faster robot go to that direction
+                math.sin is used for same reason as ^ but to go faster forward/backwards
+             */
 
-            fl.setPower(v1);
-            fr.setPower(v2);
-            bl.setPower(v3);
-            br.setPower(v4);
+            fl.setPower(-v1);
+            fr.setPower(-v2);
+            bl.setPower(-v3);
+            br.setPower(-v4);
 
             //spin carousel servo gamepad2
             if (gamepad2.right_bumper)
