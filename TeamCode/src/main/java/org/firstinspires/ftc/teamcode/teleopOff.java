@@ -26,13 +26,14 @@ public class teleopOff extends LinearOpMode {
         //bl.setDirection(DcMotorSimple.Direction.REVERSE);
         br.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //CRServo spinServo = hardwareMap.crservo.get("crServo");
+        CRServo spinServo = hardwareMap.crservo.get("crServo");
         //CRServo liftServo = hardwareMap.crservo.get("liftServo");
 
-        //Servo clawServo = hardwareMap.servo.get("clawServo");
+        Servo clawServo = hardwareMap.servo.get("clawServo");
 
         double driveSpeed = 1;
         double servoSpinSpeed = 0;
+        double liftSpeed =  0;
 
 
         telemetry.addData("Status", "Initalized");
@@ -40,8 +41,7 @@ public class teleopOff extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
 
-            //speed control gamepad1
-            /*if (gamepad1.a) {
+            if (gamepad1.a) {
                 if (driveSpeed == 1) { //if the current increment is 1, it'll switch to 0.5
                     driveSpeed = 0.5;
                 } else { //if the current increment is not 1, it'll switch to 1
@@ -65,12 +65,12 @@ public class teleopOff extends LinearOpMode {
                 math.sin is used for same reason as ^ but to go faster forward/backwards
              */
 
-            //fl.setPower(v1);
-            //fr.setPower(v2);
-            //bl.setPower(v3);
-            //br.setPower(v4);
+            fl.setPower(v1);
+            fr.setPower(v2);
+            bl.setPower(v3);
+            br.setPower(v4);
 
-            /*if (gamepad1.right_bumper)
+            if (gamepad1.right_bumper)
             {
                 servoSpinSpeed = 1;
 
@@ -91,33 +91,32 @@ public class teleopOff extends LinearOpMode {
             }
 
             //spin carousel servo gamepad
-            //spinServo.setPower(servoSpinSpeed);
+            spinServo.setPower(servoSpinSpeed);
 
-            //lift servo gamepad2
-            //liftServo.setPower(gamepad1.right_trigger);
-            //liftServo.setPower(-gamepad1.left_trigger);
+            if((gamepad1.right_trigger > 0) && gamepad1.left_trigger == 0){
+                lift.setPower(-gamepad1.right_trigger);
+            }
+            if((gamepad1.left_trigger > 0) && gamepad1.right_trigger == 0){
+                lift.setPower(gamepad1.left_trigger);
+            }
+            if(gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
+                lift.setPower(0);
+            }
 
-            lift.setPower(-gamepad1.right_trigger);
-            lift.setPower(gamepad1.left_trigger);
 
-
-
-            //lift servo gamepad2
-            *//*if (gamepad1.x) {
+            if (gamepad1.x) {
                 clawServo.setPosition(5);
             }
             if (gamepad1.b) {
                 clawServo.setPosition(0);
-            }*//*
+            }
 
             telemetry.addData("Status", "Running");
             telemetry.addData("right joystick y value", gamepad1.right_stick_y);
             telemetry.addData("right joystick x value", gamepad1.right_stick_x);
             telemetry.addData("left joystick y value", gamepad1.left_stick_y);
             telemetry.addData("left joystick x value", gamepad1.left_stick_x);
-            telemetry.update();*/
-
-            lift.setPower(-1);
+            telemetry.update();
         }
     }
 }

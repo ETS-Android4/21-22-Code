@@ -64,12 +64,13 @@ public class teleopOff2 extends LinearOpMode {
                 math.sin is used for same reason as ^ but to go faster forward/backwards
              */
 
-            fl.setPower(-v1);
-            fr.setPower(-v2);
-            bl.setPower(-v3);
-            br.setPower(-v4);
+            fl.setPower(v1);
+            fr.setPower(v2);
+            bl.setPower(v3);
+            br.setPower(v4);
 
-            //spin carousel servo gamepad2
+
+
             if (gamepad2.right_bumper)
             {
                 servoSpinSpeed = 1;
@@ -89,17 +90,25 @@ public class teleopOff2 extends LinearOpMode {
                 servoSpinSpeed = 0;
 
             }
+
+            //spin carousel servo gamepad
             spinServo.setPower(servoSpinSpeed);
 
-            //lift servo gamepad2
-            lift.setPower(gamepad2.right_trigger);
-            lift.setPower(-gamepad2.left_trigger);
+            if((gamepad2.right_trigger > 0) && gamepad2.left_trigger == 0){
+                lift.setPower(-gamepad1.right_trigger);
+            }
+            if((gamepad2.left_trigger > 0) && gamepad2.right_trigger == 0){
+                lift.setPower(gamepad1.left_trigger);
+            }
+            if(gamepad2.right_trigger == 0 && gamepad2.left_trigger == 0){
+                lift.setPower(0);
+            }
 
-            //lift servo gamepad2
-            if(gamepad2.x){
+
+            if (gamepad2.x) {
                 clawServo.setPosition(5);
             }
-            if(gamepad2.b){
+            if (gamepad2.b) {
                 clawServo.setPosition(0);
             }
 
