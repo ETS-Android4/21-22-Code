@@ -53,41 +53,53 @@ public class cvAuto1 extends LinearOpMode {
             if (pipeline.getAnalysis() == camera.SkystonePosition.RIGHT) {
                 telemetry.addData("right", "found item in right box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
                 robot.rotate(45);
-                //robot.lift(5000);
+                robot.liftMotor(-1940, -.5);
                 robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL)); //random number
-                //robot.clawOpen();
+                robot.clawOpen();
+                sleep(500);
                 robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
-                //robot.liftDown(5000);
-                robot.rotate(-90);
-                robot.driveForwardDistance(1, (int) (2000/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+                robot.liftMotor(800, .5);
+                robot.rotate(0);
+                robot.driveBackDistance(.6, (int) (610/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+                robot.driveRightDistance(.5, 1000);
+                robot.liftMotor(1140, .5); //go to white warehouse //go to white warehouse
+
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.CENTER) {
                 telemetry.addData("center", "found item in center box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
                 robot.rotate(45);
-                //robot.lift(5000);
+                robot.liftMotor(-1130, -.5);
                 robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL)); //random number
-                //robot.clawOpen();
+                robot.clawOpen();
+                sleep(500);
                 robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
-                //robot.liftDown(5000);
-                robot.rotate(-90);
-                robot.driveForwardDistance(1, (int) (2000/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+                //robot.liftMotor(1130, .5);
+                robot.rotate(0);
+                robot.driveBackDistance(.6, (int) (610/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+                robot.driveRightDistance(.5, 1000);
+                robot.liftMotor(1130, .5); //go to white warehouse //go to white warehouse
+
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.LEFT) {
                 telemetry.addData("left", "found item in left box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
+                robot.driveForwardDistance(.25, (int) (650/TICKSTOMMTRAVEL));
                 robot.rotate(45);
-                //robot.lift(5000);
+                robot.liftMotor(-454, -.5);
                 robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL)); //random number
-                //robot.clawOpen();
+                robot.clawOpen();
+                sleep(500);
                 robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
-                //robot.liftDown(5000);
-                robot.rotate(-90);
-                robot.driveForwardDistance(1, (int) (2000/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+                //robot.liftMotor(454, .5);
+                robot.rotate(0);
+                robot.driveBackDistance(.6, (int) (610/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+                robot.driveRightDistance(.5, 1000);
+                robot.liftMotor(454, .5); //go to white warehouse //go to white warehouse
+
             }
         }
     }

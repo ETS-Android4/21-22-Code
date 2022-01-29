@@ -25,6 +25,7 @@ public class basicBlue3Auto extends LinearOpMode {
     double GEARRATIO = 1;
     double TICKSTOMMTRAVEL = (CIRCUMFERENCEOFWHEEL/ENCODERTICKS) * GEARRATIO;
 
+    //lvl 1 -454 ticks, lvl 2 -1130 ticks, lvl 3 -1940
     Robot robot = new Robot();
 
     public void runOpMode(){
@@ -36,14 +37,15 @@ public class basicBlue3Auto extends LinearOpMode {
         if(opModeIsActive()){
             robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
             robot.rotate(-45);
-            robot.liftMotor(150, -1);
+            robot.liftMotor(-454, -.5);
             robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL)); //random number
             robot.clawOpen();
             sleep(500);
             robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));    //away from hub and to warehouse
             //robot.liftMotor(500, 1);
-            robot.rotate(90);
-            robot.driveForwardDistance(1, (int) (2000/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+            robot.rotate(0);
+            robot.driveBackDistance(.6, (int) (610/TICKSTOMMTRAVEL)); //go to white warehouse //go to white warehouse
+            robot.driveLeftDistance(.5, 1000);
         }
     }
 

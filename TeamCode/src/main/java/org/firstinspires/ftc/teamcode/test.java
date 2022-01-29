@@ -35,12 +35,18 @@ public class test extends LinearOpMode {
         //bl.setDirection(DcMotorSimple.Direction.REVERSE);
         br.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
         double driveSpeed = 1;
         double r;
         double gpAngle;
         double spin;
         double v1, v2, v3, v4;
         double newGpAngle;
+
+        final int liftHome = 0;
         
         boolean fieldCentric = false;
         double angle = 0;
@@ -91,31 +97,30 @@ public class test extends LinearOpMode {
             bl.setPower(-v3);
             br.setPower(-v4);
 
-            if(gamepad1.y){
-                fieldCentric = true;
-            }
-            else{
-                fieldCentric = false;
-            }
-            while(fieldCentric){
-                angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-                angle = angles.firstAngle;
-                
-                r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
-                gpAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
-                spin = -gamepad1.right_stick_x;
-                if(angle < 0){
-                    angle = -angle; //make it pos
-                    newGpAngle = gpAngle - angle;
+            if(gamepad1.dpad_down){
+                lift.setTargetPosition(liftHome);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(.5);
+                while(lift.isBusy()){
+
                 }
-                else{
-                    
-                }
-                
-                if(gamepad1.y){
-                    fieldCentric = false;
-                }
+                lift.setPower(0);
+                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
+
+            if((gamepad1.right_trigger > 0) && gamepad1.left_trigger == 0){
+                lift.setPower(-gamepad1.right_trigger);
+            }
+            if((gamepad1.left_trigger > 0) && gamepad1.right_trigger == 0){
+                lift.setPower(gamepad1.left_trigger);
+            }
+            if(gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
+                lift.setPower(0);
+            }
+
+            telemetry.addData("enc ticks lift", lift.getCurrentPosition());
+            telemetry.update();
+
 
         }
     }

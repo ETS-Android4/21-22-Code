@@ -50,12 +50,12 @@ public class camera extends OpenCvPipeline {
     /*
      * The core values which define the location and size of the sample regions
      */
-    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(1,160);
-    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(141,160);
-    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(200,160);
+    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(15,60);
+    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(145,60);
+    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(260,55);
 
-    static final int REGION_WIDTH = 20;
-    static final int REGION_HEIGHT = 20;
+    static final int REGION_WIDTH = 25;
+    static final int REGION_HEIGHT = 25;
 
     /*
      * Points which actually define the sample region rectangles, derived from above values

@@ -56,15 +56,15 @@ public class testAuto extends LinearOpMode {
 
         DcMotor lift = hardwareMap.dcMotor.get("lift_dcMotor");
 
+        robot.clawClamp();
         waitForStart();
 
-        robot.clawClamp();
-        while(opModeIsActive()){
-            //robot.clawClamp();
-            //sleep(1000);
+        //robot.clawClamp();
+        if(opModeIsActive()){
+            //lvl 1 -454 ticks, lvl 2 -1130 ticks, lvl 3 -1940
+            robot.driveRightDistance(.5, 500);
+            robot.driveLeftDistance(.5, 500);
 
-            //robot.liftMotor(100, -1);
-            lift.setPower(1);
 
         }
     }

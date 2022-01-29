@@ -26,14 +26,15 @@ public class teleopOff extends LinearOpMode {
         //bl.setDirection(DcMotorSimple.Direction.REVERSE);
         br.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        CRServo spinServo = hardwareMap.crservo.get("crServo");
-        //CRServo liftServo = hardwareMap.crservo.get("liftServo");
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        CRServo spinServo = hardwareMap.crservo.get("crServo");
         Servo clawServo = hardwareMap.servo.get("clawServo");
 
         double driveSpeed = 1;
         double servoSpinSpeed = 0;
-        double liftSpeed =  0;
+        final int liftHome = 0;
 
 
         telemetry.addData("Status", "Initalized");
@@ -44,8 +45,10 @@ public class teleopOff extends LinearOpMode {
             if (gamepad1.a) {
                 if (driveSpeed == 1) { //if the current increment is 1, it'll switch to 0.5
                     driveSpeed = 0.5;
+                    telemetry.addData("Slow Mode", "ON");
                 } else { //if the current increment is not 1, it'll switch to 1
                     driveSpeed = 1;
+                    telemetry.addData("Normal speed", "ON");
                 }
             }
 
@@ -54,10 +57,10 @@ public class teleopOff extends LinearOpMode {
                                                                                                          //it "shifts" the powers to each motor CW
             double rightX = -gamepad1.right_stick_x; //for rotating w/ right stick
 
-            final double v1 = r * Math.cos(robotAngle) + rightX;
-            final double v2 = r * Math.sin(robotAngle) - rightX;
-            final double v3 = r * Math.sin(robotAngle) + rightX;
-            final double v4 = r * Math.cos(robotAngle) - rightX;
+            final double v1 = driveSpeed * (r * Math.cos(robotAngle) + rightX);
+            final double v2 = driveSpeed * (r * Math.sin(robotAngle) - rightX);
+            final double v3 = driveSpeed * (r * Math.sin(robotAngle) + rightX);
+            final double v4 = driveSpeed * (r * Math.cos(robotAngle) - rightX);
             /*
                 r is mulitplier for power
                 math.cos is used for fl and br bc fl&br are used to go diagonal top right, if you want to go faster to the right apply more power to
@@ -70,28 +73,35 @@ public class teleopOff extends LinearOpMode {
             bl.setPower(v3);
             br.setPower(v4);
 
-            if (gamepad1.right_bumper)
-            {
+            if (gamepad1.right_bumper) {
                 servoSpinSpeed = 1;
 
             }
-            else if (gamepad1.left_bumper)
-            {
+            else if (gamepad1.left_bumper) {
                 servoSpinSpeed = -1;
 
             }
-            else if (gamepad1.right_bumper && gamepad1.left_bumper)
-            {
+            else if (gamepad1.right_bumper && gamepad1.left_bumper) {
                 servoSpinSpeed = 0;
             }
-            else
-            {
+            else {
                 servoSpinSpeed = 0;
 
             }
 
             //spin carousel servo gamepad
             spinServo.setPower(servoSpinSpeed);
+
+            if(gamepad1.dpad_down){
+                lift.setTargetPosition(liftHome);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(.5);
+                while(lift.isBusy()){
+
+                }
+                lift.setPower(0);
+                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
 
             if((gamepad1.right_trigger > 0) && gamepad1.left_trigger == 0){
                 lift.setPower(-gamepad1.right_trigger);
@@ -111,11 +121,6 @@ public class teleopOff extends LinearOpMode {
                 clawServo.setPosition(0);
             }
 
-            telemetry.addData("Status", "Running");
-            telemetry.addData("right joystick y value", gamepad1.right_stick_y);
-            telemetry.addData("right joystick x value", gamepad1.right_stick_x);
-            telemetry.addData("left joystick y value", gamepad1.left_stick_y);
-            telemetry.addData("left joystick x value", gamepad1.left_stick_x);
             telemetry.update();
         }
     }

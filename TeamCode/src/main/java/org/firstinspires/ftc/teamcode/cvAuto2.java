@@ -43,65 +43,95 @@ public class cvAuto2 extends LinearOpMode {
                  */
             }
         });
-
+        robot.clawClamp();
         waitForStart();
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
             telemetry.addData("img analysis", pipeline.getAnalysis());
             telemetry.update();
 
             if (pipeline.getAnalysis() == camera.SkystonePosition.RIGHT) {
                 telemetry.addData("right", "found item in right box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
-                robot.rotate(45);
-                //robot.lift(5000);
-                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.rotate(-47);
+                robot.liftMotor(-1940, -1);
+                robot.driveForwardDistance(.25, (int) (240/TICKSTOMMTRAVEL));
                 robot.clawOpen();
-                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
-                //robot.liftDown(5000);
-                robot.rotate(180);
-                robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
-                robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); // go to parking
+                sleep(500);
+                robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));
+                robot.liftMotor(1940, .5);
+                sleep(500);
+                robot.driveBackDistance(.25, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(0);
-                robot.driveForwardDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.5, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(-90);
-                robot.driveForwardDistance(.5, (int) (300/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.5, (int) (650/TICKSTOMMTRAVEL));
+                robot.rotate(-25);
+                robot.driveLeftDistance(.5, (int) (76/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.2, (int)(76/TICKSTOMMTRAVEL));
+                robot.duckServo(1, 4400);
+                robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
+                robot.rotate(0);
+                robot.driveForwardDistance(.5, (int) (320/TICKSTOMMTRAVEL));
+                sleep(500);
+                robot.rotate(0);
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.CENTER) {
                 telemetry.addData("center", "found item in center box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
-                robot.rotate(45);
-                //robot.lift(2500);
-                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.rotate(-47);
+                robot.liftMotor(-1130, -1);
+                robot.driveForwardDistance(.25, (int) (240/TICKSTOMMTRAVEL));
                 robot.clawOpen();
-                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
-                //robot.liftDown(2500);
-                robot.rotate(180);
-                robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
-                robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); //go to parking
+                sleep(500);
+                robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));
+                robot.liftMotor(1130, .5);
+                sleep(500);
+                robot.driveBackDistance(.25, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(0);
-                robot.driveForwardDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.5, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(-90);
-                robot.driveForwardDistance(.5, (int) (300/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.5, (int) (650/TICKSTOMMTRAVEL));
+                robot.rotate(-25);
+                robot.driveLeftDistance(.5, (int) (76/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.2, (int)(76/TICKSTOMMTRAVEL));
+                robot.duckServo(1, 4400);
+                robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
+                robot.rotate(0);
+                robot.driveForwardDistance(.5, (int) (320/TICKSTOMMTRAVEL));
+                sleep(500);
+                robot.rotate(0);
             }
             else if (pipeline.getAnalysis() == camera.SkystonePosition.LEFT) {
                 telemetry.addData("left", "found item in left box");
                 telemetry.update();
-                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL)); //try 457 mm
-                robot.rotate(45);
-                //robot.lift(0);
-                robot.driveForwardDistance(.25, (int) (127/TICKSTOMMTRAVEL)); //random number
-                //robot.liftDown(0);
+                robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
+                robot.rotate(-47);
+                robot.liftMotor(-456, -1);
+                robot.driveForwardDistance(.25, (int) (240/TICKSTOMMTRAVEL));
                 robot.clawOpen();
-                robot.driveBackDistance(.25, (int) (127/TICKSTOMMTRAVEL));    //away from hub and to duck
-                robot.rotate(180);
-                robot.driveForwardDistance(.5, (int) (1075/TICKSTOMMTRAVEL)); //go to duck carousal
-                robot.driveBackDistance(.5, (int) (50/TICKSTOMMTRAVEL)); //go to parking
+                sleep(500);
+                robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));
+                robot.liftMotor(456, .5);
+                sleep(500);
+                robot.driveBackDistance(.25, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(0);
-                robot.driveForwardDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.5, (int) (610/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.5, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(-90);
-                robot.driveForwardDistance(.5, (int) (300/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.5, (int) (650/TICKSTOMMTRAVEL));
+                robot.rotate(-25);
+                robot.driveLeftDistance(.5, (int) (76/TICKSTOMMTRAVEL));
+                robot.driveBackDistance(.2, (int)(76/TICKSTOMMTRAVEL));
+                robot.duckServo(1, 4400);
+                robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
+                robot.rotate(0);
+                robot.driveForwardDistance(.5, (int) (320/TICKSTOMMTRAVEL));
+                sleep(500);
+                robot.rotate(0);
             }
         }
     }

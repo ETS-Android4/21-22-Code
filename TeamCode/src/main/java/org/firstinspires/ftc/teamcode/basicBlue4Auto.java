@@ -40,13 +40,14 @@ public class basicBlue4Auto extends LinearOpMode {
         waitForStart();
             if (opModeIsActive()) {
                 robot.driveForwardDistance(.25, (int) (610/TICKSTOMMTRAVEL));
-                robot.rotate(45);
-                robot.liftMotor(150, -1);
+                robot.rotate(55);
+                robot.liftMotor(-1940, -1);
                 robot.driveForwardDistance(.25, (int) (220/TICKSTOMMTRAVEL));
                 robot.clawOpen();
                 sleep(500);
                 robot.driveBackDistance(.25, (int) (150/TICKSTOMMTRAVEL));
-                //robot.liftMotor(500, 1);
+                robot.liftMotor(1940, .5);
+                sleep(500);
                 robot.driveBackDistance(.25, (int) (70/TICKSTOMMTRAVEL));
                 robot.rotate(0);
                 robot.driveBackDistance(.5, (int) (610/TICKSTOMMTRAVEL));
@@ -57,7 +58,8 @@ public class basicBlue4Auto extends LinearOpMode {
                 robot.duckServo(1, 4400);
                 robot.driveForwardDistance(.5, (int) (30/TICKSTOMMTRAVEL));
                 robot.rotate(0);
-                robot.driveForwardDistance(.5, (int) (550/TICKSTOMMTRAVEL));
+                robot.driveForwardDistance(.5, (int) (320/TICKSTOMMTRAVEL));
+                sleep(500);
                 robot.rotate(0);
             }
         }

@@ -55,9 +55,10 @@ public class Robot {
         bl = hwMap.dcMotor.get("back_left_motor");
         br = hwMap.dcMotor.get("back_right_motor");
         lift = hwMap.dcMotor.get("lift_dcMotor");
-        fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        //bl.setDirection(DcMotorSimple.Direction.REVERSE);
-        br.setDirection(DcMotorSimple.Direction.REVERSE);
+        //fl.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        //br.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         crServo = hwMap.crservo.get("crServo");
@@ -142,15 +143,15 @@ public class Robot {
 
         fl.setTargetPosition(distance);
         fr.setTargetPosition(-distance);
-        bl.setTargetPosition(distance);
-        br.setTargetPosition(-distance);
+        bl.setTargetPosition(-distance);
+        br.setTargetPosition(distance);
 
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        driveBack(power);
+        driveRight(power);
 
         while(fl.isBusy() && fr.isBusy() && bl.isBusy() && br.isBusy())
         {
@@ -170,15 +171,15 @@ public class Robot {
 
         fl.setTargetPosition(-distance);
         fr.setTargetPosition(distance);
-        bl.setTargetPosition(-distance);
-        br.setTargetPosition(distance);
+        bl.setTargetPosition(distance);
+        br.setTargetPosition(-distance);
 
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        driveBack(power);
+        driveLeft(power);
 
         while(fl.isBusy() && fr.isBusy() && bl.isBusy() && br.isBusy())
         {
@@ -190,7 +191,7 @@ public class Robot {
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    private void driveForward(double power) {
+    public void driveForward(double power) {
         fl.setPower(power);
         fr.setPower(power);
         bl.setPower(power);
@@ -202,6 +203,18 @@ public class Robot {
         bl.setPower(-power);
         br.setPower(-power);
     }
+    private void driveRight(double power){
+        fl.setPower(power);
+        fr.setPower(-power);
+        bl.setPower(-power);
+        br.setPower(power);
+    }
+    private void driveLeft(double power){
+        fl.setPower(-power);
+        fr.setPower(power);
+        bl.setPower(power);
+        br.setPower(-power);
+    }
     private void stopDriving() {
         fl.setPower(0);
         fr.setPower(0);
@@ -210,6 +223,10 @@ public class Robot {
     }
     public void duckServo(double power, long time){ //might not work look at sleep line
         crServo.setPower(power);
+        fl.setPower(0);
+        fl.setPower(0);
+        fl.setPower(0);
+        fl.setPower(0);
         sleep(time);
         crServo.setPower(0);
     }
